@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Promise</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    font-family: 'Segoe UI', sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(to top, #1e1e2f, #ff758c, #ff7eb3);
+    overflow:hidden;
+    color:white;
+}
+
+/* Floating hearts */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    animation: floatUp 6s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes floatUp{
+    0%{ transform:translateY(0); opacity:0.8;}
+    100%{ transform:translateY(-100vh); opacity:0;}
+}
+
+/* Main container */
+.container{
+    text-align:center;
+    z-index:2;
+    width:90%;
+    max-width:600px;
+}
+
+/* Silhouette couple */
+.scene{
+    position:relative;
+    width:400px;
+    height:250px;
+    margin:0 auto 20px;
+}
+
+.person{
+    position:absolute;
+    bottom:0;
+    width:100px;
+    height:200px;
+    background:#111;
+    border-radius:50px 50px 20px 20px;
+}
+
+.boy{
+    left:70px;
+}
+
+.girl{
+    right:70px;
+}
+
+.girl::before{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    background:#111;
+    border-radius:50%;
+    top:-40px;
+    left:-10px;
+}
+
+/* Holding hands */
+.hand{
+    position:absolute;
+    width:80px;
+    height:12px;
+    background:#111;
+    top:110px;
+}
+
+.boy .hand{
+    right:-60px;
+    transform:rotate(10deg);
+}
+
+.girl .hand{
+    left:-60px;
+    transform:rotate(-10deg);
+}
+
+/* Text */
+.message{
+    font-size:24px;
+    min-height:70px;
+    margin-bottom:20px;
+    transition:0.5s;
+}
+
+/* Buttons */
+button{
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    margin:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.yes{
+    background:white;
+    color:#ff4d6d;
+}
+
+.no{
+    background:#222;
+    color:white;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+/* Fade animation */
+.fade{
+    animation:fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container fade">
+
+    <div class="scene">
+        <div class="person boy">
+            <div class="hand"></div>
+        </div>
+        <div class="person girl">
+            <div class="hand"></div>
+        </div>
+    </div>
+
+    <div class="message" id="text">
+        You are mine right?
+    </div>
+
+    <div id="buttons">
+        <button class="yes" onclick="start()">YES ❤️</button>
+        <button class="no" onclick="angry()">I don't know 😠</button>
+    </div>
+
+</div>
+
+<script>
+
+// Floating hearts generator
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{ heart.remove(); },6000);
+}
+
+setInterval(createHeart, 600);
+
+
+// Promise sequence
+let promises = [
+"Promise me to eat healthy for me ❤️",
+"Promise me to cross the road carefully for me 💕",
+"Promise me to keep yourself fit for me 💖",
+"Could you promise me to stay mine forever? 💍"
+];
+
+let index = 0;
+
+function start(){
+    document.getElementById("buttons").style.display="none";
+    showPromise();
+}
+
+function showPromise(){
+    if(index < promises.length){
+        document.getElementById("text").innerText = promises[index];
+        index++;
+        setTimeout(showPromise, 3000);
+    }else{
+        document.getElementById("text").innerText = "Forever starts now ❤️✨";
+    }
+}
+
+function angry(){
+    document.getElementById("text").innerText = "That's not acceptable 😠 Try again!";
+}
+
+</script>
+
+</body>
+</html>
